@@ -18,6 +18,6 @@ const firebaseapp =  initializeApp({
  
 
 
-export const Db = getFirestore(firebaseapp);
+export default getFirestore(firebaseapp);
 // Initialize Firebase
 

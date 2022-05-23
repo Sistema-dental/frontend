@@ -1,13 +1,15 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactInputMask from 'react-input-mask';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
+import { collection , getDocs , addDoc } from 'firebase/firestore';
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
+import db from '../../../Apifire'
 
 // ----------------------------------------------------------------------
 
@@ -15,31 +17,65 @@ export default function RegisterForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  
+  const [nome, setNome] = useState("")
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
+  const [telefone, setTelefone] = useState("")
+  const [tipo, setTipo] = useState("")
+  const [user, setUser] = useState({})
+  const useref = collection(db, "usuarios") 
 
+  async function criarDado(data) {
+    try {
+      if(data.tipo){
+        const user = await addDoc(collection(db, "usuarios"), data );
+      }else{
+        data.tipo = 3
+        const user = await addDoc(collection(db, "usuarios"), data );
+      }
+      
+
+      console.log("dados salvos com sucessos", user);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(useref);
+      setUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getUsers();
+  }, [useref]);
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().min(2, 'Muito pequena!').max(50, 'Muito Grande!').required('nome e obrigatorio'),
-    lastName: Yup.string().min(2, 'Muito pequena!').max(50, 'Muito Grande!').required('nome e obrigatorio'),
+    nome1: Yup.string().min(2, 'Muito pequena!').max(50, 'Muito Grande!').required('nome e obrigatorio'),
+    nome2: Yup.string().min(2, 'Muito pequena!').max(50, 'Muito Grande!').required('nome e obrigatorio'),
     email: Yup.string().email('Precisamos de um email valido').required('o email e obrigatorio'),
-    password: Yup.string().min(6, 'Muito pequena!').max(40, 'Muito Grande!').required('senha necessaria'),
+    senha: Yup.string().min(6, 'Muito pequena!').max(40, 'Muito Grande!').required('senha necessaria'),
     telefone:  Yup.number('O campo deve ser um numero').integer('O numero deve ser inteiro').required('telefone e obrigatorio')
   });
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      nome1: '',
+      nome2: '',
       email: '',
-      password: '',
+      senha: '',
       telefone:'',
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      const data = values
+      
+      
+      criarDado(data);
+      navigate('/dashboard/app', { replace: true });
     },
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
-
+  const { errors, values , touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  console.log(values)
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -48,7 +84,7 @@ export default function RegisterForm() {
             <TextField
               fullWidth
               label="Primeiro nome"
-              {...getFieldProps('firstName')}
+              {...getFieldProps('nome1')}
               error={Boolean(touched.firstName && errors.firstName)}
               helperText={touched.firstName && errors.firstName}
             />
@@ -56,7 +92,7 @@ export default function RegisterForm() {
             <TextField
               fullWidth
               label="Ultimo nome"
-              {...getFieldProps('lastName')}
+              {...getFieldProps('nome2')}
               error={Boolean(touched.lastName && errors.lastName)}
               helperText={touched.lastName && errors.lastName}
             />
@@ -77,7 +113,7 @@ export default function RegisterForm() {
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
             label="Senha"
-            {...getFieldProps('password')}
+            {...getFieldProps('senha')}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

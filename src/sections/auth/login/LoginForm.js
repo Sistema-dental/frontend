@@ -6,25 +6,30 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
+import { collection, getDocs } from 'firebase/firestore';
 import Iconify from '../../../components/Iconify';
-import Bd from '../../../Apifire'
+import db from '../../../Apifire';
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [senha, setSenha] = useState("")
-  const [telefone, setTelefone] = useState("")
-  const [tipo, setTipo] = useState("")
-  const [user, setUser] = useState("")
 
+  const [user, setUser] = useState([])
+  const useref = collection(db, "usuarios")
   useEffect(() => {
-    
+    async function data() {
+      const data = await getDocs(useref)
+     
+      const pega = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      
+       setUser(pega)
+       
+    }
+    data();
   }, [])
-  
+  console.log(user)
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -38,7 +43,16 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      for (let i = 0; i < user.length; i += 1) {
+        console.log(values.email)
+        console.log(user[i].email)
+        console.log(values.senha)
+        console.log(user[i].email)
+       if(user[i].email === values.email && user[i].senha === values.senha){
+        navigate('/dashboard/app', { replace: true });
+       }
+      }
+      
     },
   });
 
@@ -47,7 +61,7 @@ export default function LoginForm() {
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
-
+  
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
