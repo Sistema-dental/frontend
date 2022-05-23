@@ -6,50 +6,39 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
 import Iconify from '../../../components/Iconify';
-import db from '../../../Apifire';
+import db,{fireapp} from '../../../Apifire';
+
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-
+  
   const [user, setUser] = useState([])
   const useref = collection(db, "usuarios")
   
   useEffect(() => {
     async function data() {
       const data = await getDocs(useref)
-     
+      
       const pega = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       
-       setUser(pega)
-       
+      setUser(pega)
+      
     }
     data();
   }, [])
   
-  function log() {
-    for (let i = 0; i < user.length; i += 1) {
-      console.log(values.email)
-      console.log(user[i].email)
-      console.log(values.senha)
-      console.log(user[i].email)
-     if(user[i].email === values.email && user[i].senha === values.senha){
-       user[i].login = true
-       return (navigate('/dashboard/app', { replace: true }))
-     }
-    }
-    return alert('usuario ou senha incorretos')
-    
-  }
+  
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     senha: Yup.string().required('Password is required'),
   });
-
+  
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -64,6 +53,24 @@ export default function LoginForm() {
   
   const { errors, touched, values, handleSubmit, getFieldProps } = formik;
 
+  function log() {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, values.email, values.senha)
+    .then((usuario) => {
+      // Signed in
+      const user = usuario;
+      console.log(user)
+      navigate('/dashboard/app', { replace: true });
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert('usuario ou senha incorretos')
+      navigate('/login', { replace: true });
+    });
+    
+  }
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };

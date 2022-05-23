@@ -41,6 +41,7 @@ DashboardNavbar.propTypes = {
 };
 
 export default function DashboardNavbar({ onOpenSidebar }) {
+  
   return (
     <RootStyle>
       <ToolbarStyle>

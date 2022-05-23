@@ -4,12 +4,13 @@ import ReactInputMask from 'react-input-mask';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { collection , getDocs , addDoc } from 'firebase/firestore';
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
-import db from '../../../Apifire'
+import db,{fireapp} from '../../../Apifire'
 
 // ----------------------------------------------------------------------
 
@@ -57,7 +58,21 @@ export default function RegisterForm() {
     senha: Yup.string().min(6, 'Muito pequena!').max(40, 'Muito Grande!').required('senha necessaria'),
     telefone:  Yup.number('O campo deve ser um numero').integer('O numero deve ser inteiro').required('telefone e obrigatorio')
   });
-
+  
+  function create() {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, values.email, values.senha)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+  }
   const formik = useFormik({
     initialValues: {
       nome1: '',
@@ -69,15 +84,14 @@ export default function RegisterForm() {
     validationSchema: RegisterSchema,
     onSubmit: () => {
       const data = values
-      
-      
+      create();
       criarDado(data);
-      navigate('/dashboard/app', { replace: true });
+      navigate('/login', { replace: true });
     },
   });
 
   const { errors, values , touched, handleSubmit, isSubmitting, getFieldProps } = formik;
-  console.log(values)
+  
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>

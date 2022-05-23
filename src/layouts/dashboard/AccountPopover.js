@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, Link as RouterLink } from 'react-router-dom';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
@@ -9,6 +10,7 @@ import MenuPopover from '../../components/MenuPopover';
 import account from '../../_mock/account';
 
 // ----------------------------------------------------------------------
+
 
 const MENU_OPTIONS = [
   {
@@ -22,7 +24,7 @@ const MENU_OPTIONS = [
     linkTo: 'dashboard/pedidos/1',
   },
   {
-    label: 'Log out',
+    label: 'Settings',
     icon: 'eva:settings-2-fill',
     linkTo: '#',
   },
@@ -34,7 +36,26 @@ export default function AccountPopover() {
   const anchorRef = useRef(null);
 
   const [open, setOpen] = useState(null);
-
+  const [usuario, setUsuario] = useState({})
+  const [dados, setDados]= useState({})
+  function logout() {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
+  function getuid() {
+      const auth = getAuth();
+      auth.onAuthStateChanged((user)=>{
+        if(user){
+          const data ={id:user.uid,foto:user.photoURL,email:user.email}
+          setUsuario(data)
+          
+        }
+      })
+  }
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -42,7 +63,11 @@ export default function AccountPopover() {
   const handleClose = () => {
     setOpen(null);
   };
+   useEffect(() => {
+     getuid();
 
+   }, [])
+   console.log(usuario)
   return (
     <>
       <IconButton
@@ -63,7 +88,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={usuario.foto? usuario.foto:'https://www.prescriptum.com.br/wp-content/uploads/2015/12/placeholder-usuario-500x500.jpg'} alt="photoURL" />
       </IconButton>
 
       <MenuPopover
@@ -85,7 +110,7 @@ export default function AccountPopover() {
             {account.displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {usuario.email}
           </Typography>
         </Box>
 
@@ -101,8 +126,8 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
-          Logout
+        <MenuItem onClick={logout()}  sx={{ m: 1 }}>
+          <Link className='nav-link' to="/login">Logout</Link>
         </MenuItem>
       </MenuPopover>
     </>
