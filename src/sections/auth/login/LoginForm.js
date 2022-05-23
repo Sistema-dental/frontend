@@ -32,13 +32,13 @@ export default function LoginForm() {
   console.log(user)
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    senha: Yup.string().required('Password is required'),
   });
 
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
+      senha: '',
       remember: true,
     },
     validationSchema: LoginSchema,
@@ -81,7 +81,7 @@ export default function LoginForm() {
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
             label="Senha"
-            {...getFieldProps('password')}
+            {...getFieldProps('senha')}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
