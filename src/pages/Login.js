@@ -69,9 +69,9 @@ export default function Login() {
 
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Don’t have an account? {''}
+              Ainda nao tem uma conta? {''}
               <Link variant="subtitle2" component={RouterLink} to="/register">
-                Get started
+                Cadastre agora
               </Link>
             </Typography>
           )}
@@ -80,7 +80,7 @@ export default function Login() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Hi, Welcome Back
+              Bem vindo a Dental Brasil
             </Typography>
             <img src="/static/illustrations/illustration_login.png" alt="login" />
           </SectionStyle>
@@ -89,10 +89,10 @@ export default function Login() {
         <Container maxWidth="sm">
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+             Faça log in na Dental Brasil
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Entrar com os dados de outra rede.</Typography>
 
             <AuthSocial />
 
@@ -100,9 +100,9 @@ export default function Login() {
 
             {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Don’t have an account?{' '}
+                Ainda nao tem uma conta?{' '}
                 <Link variant="subtitle2" component={RouterLink} to="/register">
-                  Get started
+                 Vamos la
                 </Link>
               </Typography>
             )}

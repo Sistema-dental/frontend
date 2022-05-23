@@ -27,30 +27,30 @@ export default function DashboardApp() {
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+         Bem vindo a Dental brasil
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Vendas totais" total={12345} icon={'ant-design:android-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Novos usuarios" total={54321} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Pedidos em ordem" total={12345} color="warning" icon={'ant-design:windows-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Bug Reports" total={54321} color="error" icon={'ant-design:bug-filled'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Website Visits"
-              subheader="(+43%) than last year"
+              title="grafico estilo 1 datas"
+              subheader="Sub header facil para qualquer coisa"
               chartLabels={[
                 '01/01/2003',
                 '02/01/2003',
@@ -89,7 +89,7 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Current Visits"
+              title="grafico de pizza dados visitas"
               chartData={[
                 { label: 'America', value: 4344 },
                 { label: 'Asia', value: 5435 },
@@ -107,8 +107,8 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates
-              title="Conversion Rates"
-              subheader="(+43%) than last year"
+              title="Grafico de rank de valores"
+              subheader="de noovo essa legenda facil pra qualquer coisa"
               chartData={[
                 { label: 'Italy', value: 400 },
                 { label: 'Japan', value: 430 },
@@ -118,15 +118,15 @@ export default function DashboardApp() {
                 { label: 'Germany', value: 580 },
                 { label: 'South Korea', value: 690 },
                 { label: 'Netherlands', value: 1100 },
-                { label: 'United States', value: 1200 },
-                { label: 'United Kingdom', value: 1380 },
+                { label: 'United States', value: 1234 },
+                { label: 'United Kingdom', value: 12345 },
               ]}
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject
-              title="Current Subject"
+              title="grafico de materias como habilidades"
               chartLabels={['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
               chartData={[
                 { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
@@ -139,7 +139,7 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate
-              title="News Update"
+              title="grafico de usuarios com propiedades"
               list={[...Array(5)].map((_, index) => ({
                 id: faker.datatype.uuid(),
                 title: faker.name.jobTitle(),
@@ -152,7 +152,7 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline
-              title="Order Timeline"
+              title="grafico Timeline estilo localizações"
               list={[...Array(5)].map((_, index) => ({
                 id: faker.datatype.uuid(),
                 title: [
@@ -170,26 +170,26 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppTrafficBySite
-              title="Traffic by Site"
+              title="exemplo de cards de acesso as redes"
               list={[
                 {
                   name: 'FaceBook',
-                  value: 323234,
+                  value: 12,
                   icon: <Iconify icon={'eva:facebook-fill'} color="#1877F2" width={32} height={32} />,
                 },
                 {
                   name: 'Google',
-                  value: 341212,
+                  value: 21,
                   icon: <Iconify icon={'eva:google-fill'} color="#DF3E30" width={32} height={32} />,
                 },
                 {
                   name: 'Linkedin',
-                  value: 411213,
+                  value: 31,
                   icon: <Iconify icon={'eva:linkedin-fill'} color="#006097" width={32} height={32} />,
                 },
                 {
                   name: 'Twitter',
-                  value: 443232,
+                  value: 13,
                   icon: <Iconify icon={'eva:twitter-fill'} color="#1C9CEA" width={32} height={32} />,
                 },
               ]}
@@ -198,13 +198,13 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppTasks
-              title="Tasks"
+              title="Tarefas a ser feitas"
               list={[
-                { id: '1', label: 'Create FireStone Logo' },
-                { id: '2', label: 'Add SCSS and JS files if required' },
-                { id: '3', label: 'Stakeholder Meeting' },
-                { id: '4', label: 'Scoping & Estimations' },
-                { id: '5', label: 'Sprint Showcase' },
+                { id: '1', label: 'Fazer informações' },
+                { id: '2', label: 'Fazer as paginas adicionais' },
+                { id: '3', label: 'Fazer backend' },
+                { id: '4', label: 'Pegar e testa as parada' },
+                { id: '5', label: 'Fase de testes' },
               ]}
             />
           </Grid>

@@ -17,12 +17,12 @@ const MENU_OPTIONS = [
     linkTo: '/',
   },
   {
-    label: 'Profile',
+    label: 'Pedidos',
     icon: 'eva:person-fill',
-    linkTo: '#',
+    linkTo: 'dashboard/pedidos/1',
   },
   {
-    label: 'Settings',
+    label: 'Log out',
     icon: 'eva:settings-2-fill',
     linkTo: '#',
   },

@@ -61,16 +61,16 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       }}
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-        <img src='' alt=''/>
+        <Logo />
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
-            <Avatar src={account.photoURL} alt="photoURL" />
+            <Avatar src={account.photoURL? account.photoURL : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.prescriptum.com.br%2Fquem-somos%2Fplaceholder-usuario-500x500%2F&psig=AOvVaw2xtCXi76shgZed9kgW7qOn&ust=1653141290630000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIix2a2d7vcCFQAAAAAdAAAAABAD"} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {account.displayName ? account.displayName: "Logar"}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {account.role}

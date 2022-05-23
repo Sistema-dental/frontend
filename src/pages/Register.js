@@ -68,9 +68,9 @@ export default function Register() {
           <Logo />
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Already have an account? {''}
+              Ja tem uma conta? {''}
               <Link variant="subtitle2" component={RouterLink} to="/login">
-                Login
+                Entrar
               </Link>
             </Typography>
           )}
@@ -79,7 +79,7 @@ export default function Register() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Manage the job more effectively with Minimal
+              Venha para os Serviços Dental Brasil
             </Typography>
             <img alt="register" src="/static/illustrations/illustration_register.png" />
           </SectionStyle>
@@ -88,23 +88,23 @@ export default function Register() {
         <Container>
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Get started absolutely free.
+              Cadastrar agora.
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Faça seu pedido pela Dental Brasil.</Typography>
 
             <AuthSocial />
 
             <RegisterForm />
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-              By registering, I agree to Minimal&nbsp;
+              Se registrando na Dental Brasil você concorda com os&nbsp;
               <Link underline="always" color="text.primary" href="#">
-                Terms of Service
+                 Termos de Serviços
               </Link>
-              {''}and{''}
+              {' '}E A{' '}
               <Link underline="always" color="text.primary" href="#">
-                Privacy Policy
+               Politica de privacidade
               </Link>
               .
             </Typography>

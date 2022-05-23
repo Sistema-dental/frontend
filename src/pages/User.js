@@ -31,11 +31,11 @@ import USERLIST from '../_mock/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'name', label: 'Nome comprador', alignRight: false },
+  { id: 'company', label: 'Lista', alignRight: false },
+  { id: 'role', label: 'Curso', alignRight: false },
+  { id: 'isVerified', label: 'Entregue?', alignRight: false },
+  { id: 'status', label: 'Status ', alignRight: false },
   { id: '' },
 ];
 
@@ -137,10 +137,10 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Pedidos
           </Typography>
           <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
+            Fazer um pedido
           </Button>
         </Stack>
 
