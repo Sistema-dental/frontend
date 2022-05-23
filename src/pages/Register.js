@@ -68,7 +68,7 @@ export default function Register() {
           <Logo />
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Ja tem uma conta? {''}
+              Já tem uma conta? {''}
               <Link variant="subtitle2" component={RouterLink} to="/login">
                 Entrar
               </Link>
@@ -79,7 +79,7 @@ export default function Register() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Venha para os Serviços Dental Brasil
+              Venha para os serviços Dental Brasil
             </Typography>
             <img alt="register" src="/static/illustrations/illustration_register.png" />
           </SectionStyle>
@@ -88,7 +88,7 @@ export default function Register() {
         <Container>
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Cadastrar agora.
+              Cadastrar agora
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>Faça seu pedido pela Dental Brasil.</Typography>
@@ -111,9 +111,9 @@ export default function Register() {
 
             {!smUp && (
               <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
-                Already have an account?{' '}
+                Já tem uma conta?{' '}
                 <Link variant="subtitle2" to="/login" component={RouterLink}>
-                  Login
+                  Entrar
                 </Link>
               </Typography>
             )}
