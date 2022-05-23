@@ -29,8 +29,10 @@ export default function RegisterForm() {
   async function criarDado(data) {
     try {
       if(data.tipo){
+        data.login = false
         const user = await addDoc(collection(db, "usuarios"), data );
       }else{
+        data.login = false
         data.tipo = 3
         const user = await addDoc(collection(db, "usuarios"), data );
       }

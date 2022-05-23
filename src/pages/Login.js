@@ -69,7 +69,7 @@ export default function Login() {
 
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Ainda nao tem uma conta? {''}
+              Ainda não tem uma conta? {''}
               <Link variant="subtitle2" component={RouterLink} to="/register">
                 Cadastre agora
               </Link>
@@ -89,7 +89,7 @@ export default function Login() {
         <Container maxWidth="sm">
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-             Faça log in na Dental Brasil
+             Faça login na Dental Brasil
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>Entrar com os dados de outra rede.</Typography>
@@ -100,7 +100,7 @@ export default function Login() {
 
             {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Ainda nao tem uma conta?{' '}
+                Ainda não tem uma conta?{' '}
                 <Link variant="subtitle2" component={RouterLink} to="/register">
                  Vamos la
                 </Link>
