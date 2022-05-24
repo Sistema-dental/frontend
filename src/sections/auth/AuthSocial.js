@@ -2,7 +2,7 @@
 import { Stack, Button, Divider, Typography } from '@mui/material';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { addDoc, collection, getDocs } from 'firebase/firestore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import db, { fireapp } from '../../Apifire';
 
@@ -12,11 +12,20 @@ import Iconify from '../../components/Iconify';
 
 export default function AuthSocial() {
   const [usuario, setUsuario] = useState({})
-  const [data, setData] = useState([])
+  const [users, setUsers] = useState([])
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
   const useref = collection(db, "usuarios")
   const auth = getAuth(fireapp);
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(useref);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getUsers();
+    
+  }, [useref]);
+  
    const loggugu= async () =>{
    signInWithPopup(auth, provider)
   .then((result) => {
@@ -25,26 +34,21 @@ export default function AuthSocial() {
     const token = credential.accessToken;
     // The signed-in user info.
     const user = result.user;
-    async function confere() {
-      const oi = await getDocs(useref);
-    setData(oi)}
+    
     console.log(user)
     const pega = user
     const dat ={id:pega.uid,foto:pega.photoURL,email:pega.email,nome1:pega.displayName}
-    confere();
-    setUsuario(dat);
-    const brabo = data.find(da => da.email === pega.email)
-    console.log(brabo)
-    
-         
-      
-      
-      
+    console.log(dat)
+   
+    console.log(users)
+    const brabo = users.find(d => d.email === dat.email)
+    if(brabo){
+       navigate('/dashboard/products', { replace: true });
+    }else{
+      criarDado(usuario);
+      return navigate('/dashboard/products', { replace: true });
+    }
      
-    // criarDado(usuario);
-    
-    // navigate('/dashboard/products', { replace: true });
-    
     
     
     
@@ -71,6 +75,7 @@ export default function AuthSocial() {
     try {
         data.login = false
         data.tipo = 3
+        
         const user = await addDoc(collection(db, "usuarios"), data );
     
       

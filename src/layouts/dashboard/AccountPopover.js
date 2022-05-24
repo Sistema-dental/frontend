@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, Link as RouterLink } from 'react-router-dom';
+import { Link, Link as RouterLink, useLocation } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, getDocs } from 'firebase/firestore';
 // @mui
@@ -36,7 +36,7 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const anchorRef = useRef(null);
-
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(null);
   const [usuario, setUsuario] = useState({})
   const [props, setProps] = useState({})
@@ -56,7 +56,7 @@ export default function AccountPopover() {
         if(credential){
           const pega = credential
           
-          const data ={id:pega.uid,foto:pega.photoURL,email:pega.email}
+          const data ={id:pega.uid,foto:pega.photoURL,email:pega.email,nome1:pega.displayName}
           setUsuario(data)
           
         }
@@ -85,8 +85,8 @@ export default function AccountPopover() {
      }
      
     }
-
-   }, [data,usuario.email,useref])
+    
+   }, [pathname])
    
   return (
     <>
@@ -127,10 +127,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {props.nome1}
+            {usuario.nome1}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {props.email}
+            {usuario.email}
           </Typography>
         </Box>
 

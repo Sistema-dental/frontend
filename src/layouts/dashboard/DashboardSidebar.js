@@ -57,8 +57,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
      onAuthStateChanged((credential)=>{
       if(credential){
         const pega = credential
-        
-        const data ={id:pega.uid,foto:pega.photoURL,email:pega.email}
+        console.log(pega)
+        const data ={id:pega.uid,foto:pega.photoURL,email:pega.email,nome1:pega.displayName}
         setUsuario(data)
         
       }
@@ -82,14 +82,14 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
    
   }
   
- }, [data,usuario.email,useref])
+ }, [usuario])
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
-
+  }, [usuario]);
+  console.log(usuario)
   const renderContent = (
     <Scrollbar
       sx={{
@@ -104,10 +104,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
-            <Avatar src={usuario.photoURL? usuario.photoURL : account.photoURL} alt="photoURL" />
+            <Avatar src={usuario.foto ? usuario.foto : account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
-            {props && <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                 {props.nome1}{' '}{props.nome2}
+            {usuario && <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+                 {usuario.nome1? usuario.nome1: props.nome1}
               </Typography>}
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {account.role}
