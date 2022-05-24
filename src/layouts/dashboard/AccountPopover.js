@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, Link as RouterLink } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { collection, getDocs } from 'firebase/firestore';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
+import db from '../../Apifire'
 // components
 import MenuPopover from '../../components/MenuPopover';
 // mocks_
@@ -37,7 +39,9 @@ export default function AccountPopover() {
 
   const [open, setOpen] = useState(null);
   const [usuario, setUsuario] = useState({})
-  const [dados, setDados]= useState({})
+  const [props, setProps] = useState({})
+  const [data, setdata] = useState([])
+  const useref = collection(db, "usuarios")
   function logout() {
     const auth = getAuth();
     signOut(auth).then(() => {
@@ -67,8 +71,22 @@ export default function AccountPopover() {
   };
    useEffect(() => {
      getuid();
+     const getUsers = async () => {
+      const data = await getDocs(useref);
+      setdata(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      
+    };
+    getUsers();
+    for (let i = 0; i < data.length; i += 1) {
+     if(data[i].email === usuario.email ){
+       data[i].login = true
+       const pega = data[i]
+       setProps(pega)
+     }
+     
+    }
 
-   }, [])
+   }, [data,usuario.email,useref])
    
   return (
     <>
@@ -109,10 +127,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {props.nome1}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {usuario.email}
+            {props.email}
           </Typography>
         </Box>
 

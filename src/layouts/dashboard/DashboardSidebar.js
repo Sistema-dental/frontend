@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { collection, getDocs } from 'firebase/firestore';
 // mock
 import account from '../../_mock/account';
 // hooks
@@ -14,7 +16,7 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
 import navConfig from './NavConfig';
-
+import db, { fireapp } from '../../Apifire'
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -45,7 +47,42 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
+  const navigate = useNavigate()
+  const [usuario, setUsuario] = useState({})
+  const [props, setProps] = useState({})
+  const [data, setdata] = useState([])
+  const useref = collection(db, "usuarios")
+  const auth = getAuth(fireapp);
+  async function getuid() {
+     onAuthStateChanged((credential)=>{
+      if(credential){
+        const pega = credential
+        
+        const data ={id:pega.uid,foto:pega.photoURL,email:pega.email}
+        setUsuario(data)
+        
+      }
+    })
+}
 
+ useEffect(() => {
+  getuid();
+  const getUsers = async () => {
+    const data = await getDocs(useref);
+    setdata(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    
+  };
+  getUsers();
+  for (let i = 0; i < data.length; i += 1) {
+   if(data[i].email === usuario.email ){
+     data[i].login = true
+     const pega = data[i]
+     setProps(pega)
+   }
+   
+  }
+  
+ }, [data,usuario.email,useref])
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
@@ -67,11 +104,11 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
-            <Avatar src={account.photoURL? account.photoURL : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.prescriptum.com.br%2Fquem-somos%2Fplaceholder-usuario-500x500%2F&psig=AOvVaw2xtCXi76shgZed9kgW7qOn&ust=1653141290630000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIix2a2d7vcCFQAAAAAdAAAAABAD"} alt="photoURL" />
+            <Avatar src={usuario.photoURL? usuario.photoURL : account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName ? account.displayName: "Logar"}
-              </Typography>
+            {props && <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+                 {props.nome1}{' '}{props.nome2}
+              </Typography>}
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {account.role}
               </Typography>

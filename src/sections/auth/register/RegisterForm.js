@@ -59,8 +59,8 @@ export default function RegisterForm() {
     telefone:  Yup.number('O campo deve ser um numero').integer('O numero deve ser inteiro').required('telefone e obrigatorio')
   });
   
+  const auth = getAuth(fireapp);
   function create() {
-    const auth = getAuth();
     createUserWithEmailAndPassword(auth, values.email, values.senha)
     .then((userCredential) => {
       // Signed in
@@ -99,18 +99,10 @@ export default function RegisterForm() {
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
-              label="Primeiro nome"
+              label="Nome completo"
               {...getFieldProps('nome1')}
               error={Boolean(touched.firstName && errors.firstName)}
               helperText={touched.firstName && errors.firstName}
-            />
-
-            <TextField
-              fullWidth
-              label="Ultimo nome"
-              {...getFieldProps('nome2')}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
             />
           </Stack>
 

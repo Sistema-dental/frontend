@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
-import db from '../Apifire'
+import db, { fireapp } from '../Apifire'
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -31,13 +31,14 @@ export default function DashboardApp() {
   const [props, setProps] = useState({})
   const [data, setdata] = useState([])
   const useref = collection(db, "usuarios")
+  const auth = getAuth(fireapp);
   async function getuid() {
-    const auth = getAuth();
-     auth.onAuthStateChanged((credential)=>{
+     onAuthStateChanged((credential)=>{
       if(credential){
         const pega = credential
         
         const data ={id:pega.uid,foto:pega.photoURL,email:pega.email}
+        console.log(data)
         setUsuario(data)
         
       }
@@ -45,7 +46,7 @@ export default function DashboardApp() {
 }
 
  useEffect(() => {
-  getuid();
+ /* getuid();
   const getUsers = async () => {
     const data = await getDocs(useref);
     setdata(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -59,18 +60,20 @@ export default function DashboardApp() {
      setProps(pega)
    }
    
-  }
+  } */
   
  }, [data,usuario.email,useref])
  
+ 
   return (
     <Page title="Dashboard">
-      {props.tipo === 1 && <Container maxWidth="xl">
+      
+      <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-         Bem vindo a Dental brasil
+         Bem vindo a Dental brasil {props.nome1}{' '}{props.nome2}
         </Typography>
-
-        <Grid container spacing={3}>
+        { props.tipo === 3 && navigate('/dashboard/products', { replace: true })}
+        {(props.tipo === 1 ||props.tipo === 2 ) && <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Vendas totais" total={12345} icon={'ant-design:android-filled'} />
           </Grid>
@@ -248,8 +251,8 @@ export default function DashboardApp() {
               ]}
             />
           </Grid>
-        </Grid>
-      </Container>}
+        </Grid>}
+      </Container>
     </Page>
   );
 }

@@ -53,8 +53,8 @@ export default function LoginForm() {
   
   const { errors, touched, values, handleSubmit, getFieldProps } = formik;
 
+  const auth = getAuth(fireapp);
   function log() {
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, values.email, values.senha)
     .then((usuario) => {
       // Signed in
