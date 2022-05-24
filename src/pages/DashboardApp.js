@@ -1,7 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
+import { getAuth } from 'firebase/auth';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
+import db from '../Apifire'
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -17,15 +22,50 @@ import {
   AppCurrentSubject,
   AppConversionRates,
 } from '../sections/@dashboard/app';
-
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
   const theme = useTheme();
+  const navigate = useNavigate()
+  const [usuario, setUsuario] = useState({})
+  const [props, setProps] = useState({})
+  const [data, setdata] = useState([])
+  const useref = collection(db, "usuarios")
+  async function getuid() {
+    const auth = getAuth();
+     auth.onAuthStateChanged((credential)=>{
+      if(credential){
+        const pega = credential
+        
+        const data ={id:pega.uid,foto:pega.photoURL,email:pega.email}
+        setUsuario(data)
+        
+      }
+    })
+}
 
+ useEffect(() => {
+  getuid();
+  const getUsers = async () => {
+    const data = await getDocs(useref);
+    setdata(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    
+  };
+  getUsers();
+  for (let i = 0; i < data.length; i += 1) {
+   if(data[i].email === usuario.email ){
+     data[i].login = true
+     const pega = data[i]
+     setProps(pega)
+   }
+   
+  }
+  
+ }, [data,usuario.email,useref])
+ 
   return (
     <Page title="Dashboard">
-      <Container maxWidth="xl">
+      {props.tipo === 1 && <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
          Bem vindo a Dental brasil
         </Typography>
@@ -209,7 +249,7 @@ export default function DashboardApp() {
             />
           </Grid>
         </Grid>
-      </Container>
+      </Container>}
     </Page>
   );
 }

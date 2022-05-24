@@ -46,11 +46,13 @@ export default function AccountPopover() {
       // An error happened.
     });
   }
-  function getuid() {
+  async function getuid() {
       const auth = getAuth();
-      auth.onAuthStateChanged((user)=>{
-        if(user){
-          const data ={id:user.uid,foto:user.photoURL,email:user.email}
+       auth.onAuthStateChanged((credential)=>{
+        if(credential){
+          const pega = credential
+          
+          const data ={id:pega.uid,foto:pega.photoURL,email:pega.email}
           setUsuario(data)
           
         }
@@ -67,7 +69,7 @@ export default function AccountPopover() {
      getuid();
 
    }, [])
-   console.log(usuario)
+   
   return (
     <>
       <IconButton

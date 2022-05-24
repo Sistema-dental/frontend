@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
 // material
 import { styled } from '@mui/material/styles';
 //
@@ -34,12 +35,13 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
-
+  
+ 
   return (
     <RootStyle>
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
       <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
-      <MainStyle>
+       <MainStyle>
         <Outlet />
       </MainStyle>
     </RootStyle>
