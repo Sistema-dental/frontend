@@ -44,9 +44,6 @@ export default function AuthSocial() {
     const brabo = users.find(d => d.email === dat.email)
     if(brabo){
        navigate('/dashboard/products', { replace: true });
-    }else{
-      criarDado(usuario);
-      return navigate('/dashboard/products', { replace: true });
     }
      
     
