@@ -28,16 +28,6 @@ const navConfig = [
     icon: getIcon('eva:file-text-fill'),
   },
   {
-    title: 'Entrar',
-    path: '/login',
-    icon: getIcon('eva:lock-fill'),
-  },
-  {
-    title: 'Cadastro',
-    path: '/register',
-    icon: getIcon('eva:person-add-fill'),
-  },
-  {
     title: 'Teste',
     path: '/404',
     icon: getIcon('eva:alert-triangle-fill'),

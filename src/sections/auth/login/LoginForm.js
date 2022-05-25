@@ -17,20 +17,12 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  
+  const [props, setProps] = useState('')
   const [user, setUser] = useState([])
   const useref = collection(db, "usuarios")
   
   useEffect(() => {
-    async function data() {
-      const data = await getDocs(useref)
-      
-      const pega = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      
-      setUser(pega)
-      
-    }
-    data();
+    
   }, [])
   
   
@@ -50,16 +42,23 @@ export default function LoginForm() {
       log();
     },
   });
-  
-  const { errors, touched, values, handleSubmit, getFieldProps } = formik;
+  function get (id){
+    const local = localStorage.getItem('usertemp') ? JSON.parse(localStorage.getItem('usertemp')) : [] 
+    return local[id]
+}
+  const { errors, touched, values, isSubmitting , handleSubmit, getFieldProps } = formik;
 
   const auth = getAuth(fireapp);
   function log() {
+    
     signInWithEmailAndPassword(auth, values.email, values.senha)
     .then((usuario) => {
       // Signed in
-      const user = usuario;
+      const user = usuario.user;
+       const temp = get(user.uid)
+       console.log(temp);
       console.log(user)
+      
       navigate('/dashboard/app', { replace: true });
       // ...
     })
@@ -120,7 +119,7 @@ export default function LoginForm() {
           </Link>
         </Stack>
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={onsubmit}>
+        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} onClick={onsubmit}>
           Entrar
         </LoadingButton>
       </Form>

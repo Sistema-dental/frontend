@@ -18,13 +18,9 @@ export default function AuthSocial() {
   const useref = collection(db, "usuarios")
   const auth = getAuth(fireapp);
   useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(useref);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getUsers();
     
-  }, [useref]);
+    
+  }, []);
   
    const loggugu= async () =>{
    signInWithPopup(auth, provider)
@@ -40,12 +36,10 @@ export default function AuthSocial() {
     const dat ={id:pega.uid,foto:pega.photoURL,email:pega.email,nome1:pega.displayName}
     console.log(dat)
    
-    console.log(users)
-    const brabo = users.find(d => d.email === dat.email)
-    if(brabo){
+    
        navigate('/dashboard/products', { replace: true });
-    }
-     
+    
+    
     
     
     

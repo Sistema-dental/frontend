@@ -54,7 +54,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const useref = collection(db, "usuarios")
   const auth = getAuth(fireapp);
   async function getuid() {
-     onAuthStateChanged((credential)=>{
+     auth.onAuthStateChanged((credential)=>{
       if(credential){
         const pega = credential
         console.log(pega)
@@ -67,28 +67,17 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
  useEffect(() => {
   getuid();
-  const getUsers = async () => {
-    const data = await getDocs(useref);
-    setdata(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    
-  };
-  getUsers();
-  for (let i = 0; i < data.length; i += 1) {
-   if(data[i].email === usuario.email ){
-     data[i].login = true
-     const pega = data[i]
-     setProps(pega)
-   }
-   
-  }
   
- }, [usuario])
+   
+  
+  
+ }, [])
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usuario]);
+  }, [pathname]);
   console.log(usuario)
   const renderContent = (
     <Scrollbar
@@ -102,12 +91,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="#">
+        <Link underline="none" component={RouterLink} to="editar">
           <AccountStyle>
             <Avatar src={usuario.foto ? usuario.foto : account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
             {usuario && <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                 {usuario.nome1? usuario.nome1: props.nome1}
+                 {usuario.nome1? usuario.nome1 : 'sem nome'}
               </Typography>}
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {account.role}

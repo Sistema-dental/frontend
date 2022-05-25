@@ -28,7 +28,7 @@ export default function DashboardApp() {
   const theme = useTheme();
   const navigate = useNavigate()
   const [usuario, setUsuario] = useState({})
-  const [props, setProps] = useState({})
+  const [props, setProps] = useState({tipo:'admin'})
   const [data, setdata] = useState([])
   const useref = collection(db, "usuarios")
   const auth = getAuth(fireapp);
@@ -72,8 +72,8 @@ export default function DashboardApp() {
         <Typography variant="h4" sx={{ mb: 5 }}>
          Bem vindo a Dental brasil {props.nome1}{' '}{props.nome2}
         </Typography>
-        { props.tipo === 3 && navigate('/dashboard/products', { replace: true })}
-        {(props.tipo === 1 ||props.tipo === 2 ) && <Grid container spacing={3}>
+        { props.tipo === 'normal' && navigate('/dashboard/products', { replace: true })}
+        {(props.tipo === 'admin' ) && <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Vendas totais" total={12345} icon={'ant-design:android-filled'} />
           </Grid>

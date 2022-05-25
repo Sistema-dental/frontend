@@ -4,17 +4,17 @@ import ReactInputMask from 'react-input-mask';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword, getAuth,signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { collection , getDocs , addDoc } from 'firebase/firestore';
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-
 // component
-import Iconify from '../../../components/Iconify';
-import db,{fireapp} from '../../../Apifire'
+import Iconify from '../components/Iconify';
+import db,{fireapp} from '../Apifire'
+
 // ----------------------------------------------------------------------
 
-export default function RegisterForm() {
+export default function Editar() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -23,36 +23,10 @@ export default function RegisterForm() {
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
   const [telefone, setTelefone] = useState("")
-  const [crio, setCrio] = useState(false)
+  const [tipo, setTipo] = useState("")
   const [user, setUser] = useState({})
   const useref = collection(db, "usuarios") 
 
- function getAll  (){
-    const local = localStorage.getItem('usertemp')
-    return local ? JSON.parse(local) : []
-}
-
-function get (id){
-    const local = localStorage.getItem('usertemp') ? JSON.parse(localStorage.getItem('usertemp')) : [] 
-    return local[id]
-}
-
-function crea (dados){
-    const local =localStorage.getItem('usertemp') ? JSON.parse(localStorage.getItem('usertemp')) : [] 
-    local.push(dados)
-    localStorage.setItem('usertemp', JSON.stringify(local))
-}
-
-function update (id,dados){
-    const local = localStorage.getItem('usertemp') ? JSON.parse(localStorage.getItem('usertemp')) : [] 
-    local.splice(id, 1, dados)
-    localStorage.setItem('usertemp', JSON.stringify(local))
-}
-function del (id){
-    const local = localStorage.getItem('usertemp') ? JSON.parse(localStorage.getItem('usertemp')) : [] 
-    local.splice(id, 1)
-    localStorage.setItem('usertemp', JSON.stringify(local))
-}
   async function criarDado(data) {
     try {
       if(data.tipo){
@@ -71,8 +45,12 @@ function del (id){
     }
   }
   useEffect(() => {
-    
-  }, []);
+    const getUsers = async () => {
+      const data = await getDocs(useref);
+      setUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getUsers();
+  }, [useref]);
   const RegisterSchema = Yup.object().shape({
     nome1: Yup.string().min(2, 'Muito pequena!').max(50, 'Muito Grande!').required('nome e obrigatorio'),
     nome2: Yup.string().min(2, 'Muito pequena!').max(50, 'Muito Grande!').required('nome e obrigatorio'),
@@ -82,41 +60,7 @@ function del (id){
   });
   
   const auth = getAuth(fireapp);
-  function create(x) {
-    createUserWithEmailAndPassword(auth, x.email, x.senha)
-    .then((userCredential) => {
-      // Signed in
-      const pega = userCredential.user
-      console.log(userCredential);
-      const data ={email:pega.email, id:pega.uid, foto:x.fotoL,nome:x.nome1,telefone: x.telefone,senha:''}
-      console.log(data)
-      crea(data)
-      
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
-  }
-  function logout() {
-   
-    signOut(auth).then(() => {
-      // Sign-out successful.
-      navigate('/login', { replace: true });
-    }).catch((error) => {
-      // An error happened.
-    });
-  }
-   
-  function criaeloga(data) {
-    create(data)
-    logout();
-    
-    
-  }
-  console.log(user)  
+
   const formik = useFormik({
     initialValues: {
       nome1: '',
@@ -127,6 +71,7 @@ function del (id){
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
+      navigate('/products', { replace: true });
     },
   });
 
@@ -140,7 +85,7 @@ function del (id){
             <TextField
               fullWidth
               label="Nome completo"
-              {...getFieldProps('nome1')}
+              {...getFieldProps('nome')}
               error={Boolean(touched.firstName && errors.firstName)}
               helperText={touched.firstName && errors.firstName}
             />
@@ -156,24 +101,7 @@ function del (id){
             helperText={touched.email && errors.email}
           />
 
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Senha"
-            {...getFieldProps('senha')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
-          />
+          
           <TextField
             fullWidth
             autoComplete="number"
@@ -189,8 +117,8 @@ function del (id){
           </TextField>  
           
   
-          <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} onClick={()=> criaeloga(values)}>
-            Cadastrar
+          <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+            Finalizado
           </LoadingButton>
         </Stack>
       </Form>

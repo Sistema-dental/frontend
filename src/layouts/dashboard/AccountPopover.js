@@ -18,17 +18,17 @@ const MENU_OPTIONS = [
   {
     label: 'Home',
     icon: 'eva:home-fill',
-    linkTo: '/',
+    linkTo: 'products',
   },
   {
     label: 'Pedidos',
     icon: 'eva:person-fill',
-    linkTo: 'dashboard/pedidos/1',
+    linkTo: 'pedidos/',
   },
   {
     label: 'Settings',
     icon: 'eva:settings-2-fill',
-    linkTo: '#',
+    linkTo: 'editar',
   },
 ];
 
@@ -42,10 +42,17 @@ export default function AccountPopover() {
   const [props, setProps] = useState({})
   const [data, setdata] = useState([])
   const useref = collection(db, "usuarios")
+  function del (id){
+    const local = localStorage.getItem('usertemp') ? JSON.parse(localStorage.getItem('usertemp')) : [] 
+    local.splice(id, 1)
+    localStorage.setItem('usertemp', JSON.stringify(local))
+    alert('deslogado com sucesso')
+}
   function logout() {
     const auth = getAuth();
     signOut(auth).then(() => {
       // Sign-out successful.
+      
     }).catch((error) => {
       // An error happened.
     });
@@ -55,7 +62,7 @@ export default function AccountPopover() {
        auth.onAuthStateChanged((credential)=>{
         if(credential){
           const pega = credential
-          
+          console.log(pega);
           const data ={id:pega.uid,foto:pega.photoURL,email:pega.email,nome1:pega.displayName}
           setUsuario(data)
           
@@ -71,20 +78,9 @@ export default function AccountPopover() {
   };
    useEffect(() => {
      getuid();
-     const getUsers = async () => {
-      const data = await getDocs(useref);
-      setdata(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      
-    };
-    getUsers();
-    for (let i = 0; i < data.length; i += 1) {
-     if(data[i].email === usuario.email ){
-       data[i].login = true
-       const pega = data[i]
-       setProps(pega)
-     }
      
-    }
+     
+    
     
    }, [pathname])
    
