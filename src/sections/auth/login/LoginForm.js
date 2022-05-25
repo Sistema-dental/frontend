@@ -73,7 +73,7 @@ export default function LoginForm() {
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
-  
+ 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -114,7 +114,7 @@ export default function LoginForm() {
             label="Lembre me"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to="#" underline="hover">
+          <Link component={RouterLink} variant="subtitle2" to="recover"  underline="hover">
             Esqueceu a senha?
           </Link>
         </Stack>
