@@ -8,6 +8,8 @@ import ScrollToTop from './components/ScrollToTop';
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 
 
+import 'sweetalert2/src/sweetalert2.scss'
+
 
 // Import the functions you need from the SDKs you need
 
