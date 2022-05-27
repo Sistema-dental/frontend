@@ -53,7 +53,7 @@ export default function Editar() {
   }, [useref]);
   const RegisterSchema = Yup.object().shape({
     nome1: Yup.string().min(2, 'Muito pequena!').max(50, 'Muito Grande!').required('nome e obrigatorio'),
-    nome2: Yup.string().min(2, 'Muito pequena!').max(50, 'Muito Grande!').required('nome e obrigatorio'),
+    foto: Yup.string().min(2, 'Muito pequena!').max(50, 'Muito Grande!').required('nome e obrigatorio'),
     email: Yup.string().email('Precisamos de um email valido').required('o email e obrigatorio'),
     senha: Yup.string().min(6, 'Muito pequena!').max(40, 'Muito Grande!').required('senha necessaria'),
     telefone:  Yup.number('O campo deve ser um numero').integer('O numero deve ser inteiro').required('telefone e obrigatorio')
@@ -64,7 +64,7 @@ export default function Editar() {
   const formik = useFormik({
     initialValues: {
       nome1: '',
-      nome2: '',
+      foto: '',
       email: '',
       senha: '',
       telefone:'',
@@ -86,8 +86,8 @@ export default function Editar() {
               fullWidth
               label="Nome completo"
               {...getFieldProps('nome')}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
+              error={Boolean(touched.nome1 && errors.nome1)}
+              helperText={touched.nome1 && errors.nome1}
             />
           </Stack>
 
@@ -113,8 +113,21 @@ export default function Editar() {
             error={Boolean(touched.telefone && errors.telefone)}
             helperText={touched.telefone && errors.telefone}
           >
-          <ReactInputMask mask="(00)9xxxxxxxx" maskChar=" " />
+          <ReactInputMask mask="(99)99999-9999" maskChar="9" />
           </TextField>  
+          <TextField
+            fullWidth
+            autoComplete=""
+            type="file"
+            label=""
+            value=""
+            mask="(99)99999-9999"
+            onChange=""
+            {...getFieldProps('foto')}
+            error={Boolean(touched.foto && errors.foto)}
+            helperText={touched.foto && errors.foto}
+          />
+           
           
   
           <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
