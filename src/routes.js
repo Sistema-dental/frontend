@@ -11,7 +11,7 @@ import Register from './pages/Register';
 import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 import Editar from './pages/Editar';
-import Recover from './pages/Recover';
+
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +34,6 @@ export default function Router() {
       children: [
         { path: '/', element: <Navigate to="/login" /> },
         { path: 'login', element: <Login /> },
-        { path: 'login/recover', element: <Recover /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" /> },

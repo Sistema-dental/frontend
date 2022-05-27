@@ -1,35 +1,40 @@
-<p align="top">
-<img src="header.svg" />
-</p>
+## Minimal [(Free version)](https://minimal-kit-react.vercel.app/)
 
-&nbsp;
+![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
-<div style="display: inline_block"><br>
-  <img align="center" alt="Js" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg">
-  <img align="center" alt="React" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
-  <img align="center" alt="HTML" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg">
-  <img align="center" alt="CSS" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg">
- 
-  <img align="center" alt="figma" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/figma/figma-original.svg">
-  <img align="center" alt="firebase" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/firebase/firebase-plain-wordmark.svg">
-  
-  <img align="center" alt="node" height="50" width="60" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg">
+> Free React Admin Dashboard made with Material-UI components and React.
 
-  
-  
-</div>
-  
-  ##
- 
-<div> 
- 
- <a href="" target="_blank"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" target="_blank"></a> 
-  <a href = "mailto:mc.grsm2@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
-  
-  ![Snake animation](https://github.com/hackerxxx1/hackerxxx1/blob/output/github-contribution-grid-snake.svg)
- 
-</div>
+![preview](public/static/preview.jpg)
 
-<p align="top">
-<img src="footer.svg" />
-</p>
+| [Minimal Free](https://minimal-kit-react.vercel.app/) | [Minimal](https://material-ui.com/store/items/minimal-dashboard/) |
+| ----------------------------------------------------- | :---------------------------------------------------------------- |
+| **7** Demo pages                                      | **42+** demo pages                                                |
+| -                                                     | ✓ Multi-language                                                  |
+| -                                                     | ✓ Dark/Light Mode 🌓                                              |
+| -                                                     | ✓ [More components](https://minimals.cc/components)               |
+| -                                                     | ✓ TypeScript version                                              |
+| -                                                     | ✓ Design files (Figma & Sketch)                                   |
+
+## Page demo
+
+- [Dashboard](https://minimal-kit-react.vercel.app/dashboard/app)
+- [Users](https://minimal-kit-react.vercel.app/dashboard/user)
+- [Product](https://minimal-kit-react.vercel.app/dashboard/products)
+- [Blog](https://minimal-kit-react.vercel.app/dashboard/blog)
+- [Login](https://minimal-kit-react.vercel.app/login)
+- [Register](https://minimal-kit-react.vercel.app/register)
+- [Not Found](https://minimal-kit-react.vercel.app/404)
+
+## Getting started
+
+- Recommended `node js 14.x` and `npm 6+`
+- Install dependencies: `npm install` or `yarn install`
+- Start the project: `npm run start` or `yarn start`
+
+## License
+
+Distributed under the MIT License. See [LICENSE](https://github.com/minimal-ui-kit/minimal.free/blob/main/LICENSE.md) for more information.
+
+## Contact us
+
+Email Us: support@minimals.cc

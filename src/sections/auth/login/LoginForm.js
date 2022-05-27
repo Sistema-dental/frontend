@@ -9,7 +9,6 @@ import { LoadingButton } from '@mui/lab';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
 import Swal from 'sweetalert2'
-import 'sweetalert2/src/sweetalert2.scss'
 import Iconify from '../../../components/Iconify';
 import db,{fireapp} from '../../../Apifire';
 // ----------------------------------------------------------------------
@@ -18,13 +17,11 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [props, setProps] = useState('')
+  const [props, setProps] = useState("")
   const [user, setUser] = useState([])
   const useref = collection(db, "usuarios")
   
-  useEffect(() => {
-    
-  }, [])
+ 
   
   
   const LoginSchema = Yup.object().shape({
@@ -53,22 +50,61 @@ export default function LoginForm() {
 
   function sucesso() {
     
-   const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    const Toast = Swal.mixin({
+     toast: true,
+     position: 'top-end',
+     showConfirmButton: false,
+     timer: 3000,
+     timerProgressBar: true,
+     didOpen: (toast) => {
+       toast.addEventListener('mouseenter', Swal.stopTimer)
+       toast.addEventListener('mouseleave', Swal.resumeTimer)
+     }
+   })
+   
+   Toast.fire({
+     icon: 'success',
+     title: 'logado com sucesso'
+   })} 
+ 
+ async function pegaemail() {
+ 
+     const { value: email } = await Swal.fire({
+       title: 'Coloque o email da conta que deseja recuperar a senha',
+       input: 'email',
+       inputLabel: 'Your email address',
+       inputPlaceholder: 'Coloque seu email aqui'
+     })
+     
+     if (email) {
+       Swal.fire({
+         title: `Email digitado: ${email}?`,
+         text: "Confirme se o seu email esta correto!",
+         icon: 'question',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'SIM Enviar email!',
+         cancelButtonText: 'NÃO Sair'
+       }).then((result) => {
+         if (result.isConfirmed) {
+           Swal.fire(
+             'Email enviado com sucesso!',
+             'Acesse seu email para trocar a senha.',
+             'success'
+           )
+           setProps(email)
+
+         }else{
+           Swal.fire(
+            'Email não enviado!',
+            'Faça o processo novamente.',
+            'error'
+           )
+           }
+       })
+     }
     }
-  })
-  
-  Toast.fire({
-    icon: 'success',
-    title: 'logado com sucesso'
-  })}
 
   function log() {
     
@@ -79,7 +115,7 @@ export default function LoginForm() {
        const temp = get(user.uid)
        console.log(temp);
       console.log(user)
-      sucesso()
+       sucesso()
       navigate('/dashboard/app', { replace: true });
       // ...
     })
@@ -91,45 +127,13 @@ export default function LoginForm() {
     });
     
   }
+
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
-  async function pegaemail() {
-
-    const { value: email } = await Swal.fire({
-      title: 'Coloque o email da conta que deseja recuperar a senha',
-      input: 'email',
-      inputLabel: 'Your email address',
-      inputPlaceholder: 'Coloque seu email aqui'
-    })
+  
     
-    if (email) {
-      Swal.fire({
-        title: `Email digitado: ${email}?`,
-        text: "Confirme se o seu email esta correto!",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Email enviado com sucesso!',
-            'Acesse seu email para trocar a senha.',
-            'success'
-          )
-          return email
-        }
-          Swal.fire(
-            'Faça o processo de novo!',
-            'warning'
-          )
-        
-      })
-    }
     
-    }
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -170,7 +174,7 @@ export default function LoginForm() {
             label="Lembre me"
           />
 
-          <Link component={RouterLink} variant="subtitle2"   underline="hover" onClick={()=>setProps(pegaemail())} >
+          <Link component={RouterLink} variant="subtitle2" to=""  underline="hover" onClick={()=>pegaemail()} >
             Esqueceu a senha?
           </Link>
         </Stack>
