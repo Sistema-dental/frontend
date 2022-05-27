@@ -22,7 +22,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <DashboardApp /> },
-        { path: 'pedidos/:id', element: <User /> },
+        { path: 'pedidos', element: <User /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
         { path: 'editar', element: <Editar /> },

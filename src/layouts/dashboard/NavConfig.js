@@ -14,7 +14,7 @@ const navConfig = [
   },
   {
     title: 'Pedidos',
-    path: '/dashboard/user',
+    path: '/dashboard/pedidos',
     icon: getIcon('eva:people-fill'),
   },
   {

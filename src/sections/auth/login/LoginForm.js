@@ -6,7 +6,7 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword ,sendPasswordResetEmail} from 'firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
 import Swal from 'sweetalert2'
 import Iconify from '../../../components/Iconify';
@@ -52,10 +52,12 @@ export default function LoginForm() {
     
     const Toast = Swal.mixin({
      toast: true,
-     position: 'top-end',
+     position: 'bottom-end',
      showConfirmButton: false,
      timer: 3000,
      timerProgressBar: true,
+     color: 'white',
+     background: 'green',
      didOpen: (toast) => {
        toast.addEventListener('mouseenter', Swal.stopTimer)
        toast.addEventListener('mouseleave', Swal.resumeTimer)
@@ -66,7 +68,13 @@ export default function LoginForm() {
      icon: 'success',
      title: 'logado com sucesso'
    })} 
- 
+  function enviar(email) {
+    sendPasswordResetEmail(auth,email).then(() => {
+      console.log('sucess')
+  }).catch(error => {
+      console.log(error)
+  });
+  }
  async function pegaemail() {
  
      const { value: email } = await Swal.fire({
@@ -94,7 +102,7 @@ export default function LoginForm() {
              'success'
            )
            setProps(email)
-
+           enviar(props)
          }else{
            Swal.fire(
             'Email não enviado!',
