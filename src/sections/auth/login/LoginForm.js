@@ -40,9 +40,9 @@ export default function LoginForm() {
       log();
     },
   });
-  function get (id){
+  function get (email){
     const local = localStorage.getItem('usertemp') ? JSON.parse(localStorage.getItem('usertemp')) : [] 
-    return local[id]
+    return local.find(element => element === email)
 }
   const { errors, touched, values, isSubmitting , handleSubmit, getFieldProps } = formik;
 
@@ -113,16 +113,22 @@ export default function LoginForm() {
        })
      }
     }
-
+    function update (id,dados){
+      const local = localStorage.getItem('usertemp') ? JSON.parse(localStorage.getItem('usertemp')) : [] 
+      local.splice(id, 1, dados)
+      localStorage.setItem('usertemp', JSON.stringify(local))
+  }
   function log() {
     
     signInWithEmailAndPassword(auth, values.email, values.senha)
     .then((usuario) => {
       // Signed in
       const user = usuario.user;
+
        const temp = get(user.uid)
        console.log(temp);
       console.log(user)
+      
        sucesso()
       navigate('/dashboard/app', { replace: true });
       // ...

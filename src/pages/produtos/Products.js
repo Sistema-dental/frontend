@@ -2,14 +2,14 @@ import { useState } from 'react';
 // material
 import { Container, Stack, Typography } from '@mui/material';
 // components
-import Page from '../components/Page';
-import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
+import Page from '../../components/Page';
+import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../../sections/@dashboard/products';
 // mock
-import PRODUCTS from '../_mock/products';
+import PRODUCTS from '../../_mock/products';
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceShop() {
+export default function Produtos() {
   const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenFilter = () => {

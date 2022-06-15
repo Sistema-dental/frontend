@@ -53,6 +53,7 @@ function del (id){
     local.splice(id, 1)
     localStorage.setItem('usertemp', JSON.stringify(local))
 }
+const auth = getAuth(fireapp);
   async function criarDado(data) {
     try {
       if(data.tipo){
@@ -81,17 +82,16 @@ function del (id){
     telefone:  Yup.number('O campo deve ser um numero').integer('O numero deve ser inteiro').required('telefone e obrigatorio')
   });
   
-  const auth = getAuth(fireapp);
   function create(x) {
     createUserWithEmailAndPassword(auth, x.email, x.senha)
     .then((userCredential) => {
       // Signed in
       const pega = userCredential.user
       console.log(userCredential);
-      const data ={email:pega.email, id:pega.uid, foto:x.fotoL,nome:x.nome1,telefone: x.telefone,senha:''}
+      const data ={email:pega.email, id:pega.uid,nome:x.nome1,telefone: x.telefone,logado:false}
       console.log(data)
       crea(data)
-      
+      criarDado(data)
       // ...
     })
     .catch((error) => {

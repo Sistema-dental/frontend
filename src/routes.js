@@ -4,13 +4,13 @@ import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Blog from './pages/Blog';
-import User from './pages/User';
+import Pedido from './pages/pedidos/Pedido';
 import Login from './pages/Login';
 import NotFound from './pages/Page404';
 import Register from './pages/Register';
-import Products from './pages/Products';
+import Produtos from './pages/produtos/Products';
 import DashboardApp from './pages/DashboardApp';
-import Editar from './pages/Editar';
+import Editar from './pages/usuario/Editar';
 
 
 // ----------------------------------------------------------------------
@@ -22,10 +22,10 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <DashboardApp /> },
-        { path: 'pedidos', element: <User /> },
-        { path: 'products', element: <Products /> },
+        { path: 'pedidos', element: <Pedido /> },
+        { path: 'produtos', element: <Produtos /> },
         { path: 'blog', element: <Blog /> },
-        { path: 'editar', element: <Editar /> },
+        { path: 'editar/usuario', element: <Editar /> },
       ],
     },
     {

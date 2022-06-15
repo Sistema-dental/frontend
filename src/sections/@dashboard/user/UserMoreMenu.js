@@ -3,14 +3,29 @@ import { Link as RouterLink } from 'react-router-dom';
 // material
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 // component
+import swal from 'sweetalert2';
 import Iconify from '../../../components/Iconify';
-
 // ----------------------------------------------------------------------
 
-export default function UserMoreMenu() {
+export default function UserMoreMenu(props) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-
+  function deletar(id) {
+    swal({
+        title: "Tem certeza?",
+        text: "Uma vez excluído, você não será capaz de recuperar este arquivo!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((podeApagar) => {
+        if (podeApagar) {
+            
+            swal("Bom trabalho!", "Você excluiu a cidade!", "success").then(()=> { window.location.reload() });
+        } else {
+            swal("Tudo bem!", "Você decidiu não excluir a cidade!", "info");
+        }
+    })
+}
   return (
     <>
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
@@ -27,14 +42,14 @@ export default function UserMoreMenu() {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem sx={{ color: 'text.secondary' }}>
+        <MenuItem sx={{ color: 'text.secondary' }} onClick={()=>deletar(props.id)}>
           <ListItemIcon>
             <Iconify icon="eva:trash-2-outline" width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Deletar" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
 
-        <MenuItem component={RouterLink} to="dashboard/edit" sx={{ color: 'text.secondary' }}>
+        <MenuItem component={RouterLink} to={`dashboard/edit/pedido${props.id}`} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
             <Iconify icon="eva:edit-fill" width={24} height={24} />
           </ListItemIcon>

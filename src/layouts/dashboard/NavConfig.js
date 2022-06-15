@@ -19,7 +19,7 @@ const navConfig = [
   },
   {
     title: 'Produtos',
-    path: '/dashboard/products',
+    path: '/dashboard/produtos',
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {

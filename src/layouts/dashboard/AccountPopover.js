@@ -18,7 +18,7 @@ const MENU_OPTIONS = [
   {
     label: 'Home',
     icon: 'eva:home-fill',
-    linkTo: 'products',
+    linkTo: 'produtos/',
   },
   {
     label: 'Pedidos',
@@ -28,7 +28,7 @@ const MENU_OPTIONS = [
   {
     label: 'Settings',
     icon: 'eva:settings-2-fill',
-    linkTo: 'editar',
+    linkTo: 'editar/',
   },
 ];
 
