@@ -50,7 +50,7 @@
           
         }
         .typing-demo {
-          width: 50ch;
+          width: 45ch;
           animation: typing 4s steps(45), blink .3s step-end infinite alternate;
           white-space: nowrap;
           overflow: hidden;
@@ -76,7 +76,7 @@
 <div class="container">
         <div class="wrapper">
             <div align="top" class="typing-demo">
-             Esse e o repositorio do Projeto da Dental Brasil
+             Esse e o repositorio de react de estudo
             </div>
 	    <div align="bottom" class="typing-demo">
              Seja bem vindo ao repositorio
