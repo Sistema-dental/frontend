@@ -162,7 +162,7 @@ export default function DashboardApp() {
                 { label: 'South Korea', value: 690 },
                 { label: 'Netherlands', value: 1100 },
                 { label: 'United States', value: 1234 },
-                { label: 'United Kingdom', value: 12345 },
+                { label: 'United Kingdom', value: 12 },
               ]}
             />
           </Grid>
