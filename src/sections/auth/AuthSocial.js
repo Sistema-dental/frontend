@@ -37,7 +37,7 @@ export default function AuthSocial() {
     console.log(dat)
    
     
-       navigate('/dashboard/products', { replace: true });
+       navigate('/dashboard/produtos', { replace: true });
     
     
     
